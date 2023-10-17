@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ContactsForm } from './ContactsForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
-import { setFilter, addContact, deletePost } from 'redux/phoneBookReducer';
+import {
+  setFilter,
+  requestContactsThunk,
+  addContactThunk,
+  deleteContactThunk,
+  selectContacts,
+  selectFilter,
+  selectIsLoading,
+  selectError,
+} from 'redux/phoneBookReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const App = () => {
-  const contacts = useSelector(state => state.phoneBook.contacts);
-  const filter = useSelector(state => state.phoneBook.filter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
   const dispatch = useDispatch();
 
   const onInputChange = event => {
@@ -25,11 +37,11 @@ export const App = () => {
       return;
     }
 
-    dispatch(addContact(contact));
+    dispatch(addContactThunk(contact));
   };
 
   const onDeletePost = postId => {
-    dispatch(deletePost(postId));
+    dispatch(deleteContactThunk(postId));
   };
 
   const inputFilter = () => {
@@ -38,11 +50,11 @@ export const App = () => {
     );
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-
   const contactsToInput = inputFilter();
+
+  useEffect(() => {
+    dispatch(requestContactsThunk());
+  }, [dispatch]);
 
   return (
     <div>

@@ -3,15 +3,15 @@ import { nanoid } from 'nanoid';
 
 export const ContactsForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const onInputChange = event => {
     switch (event.target.name) {
       case 'name':
         setName(event.target.value.trim());
         break;
-      case 'number':
-        setNumber(event.target.value.trim());
+      case 'phone':
+        setPhone(event.target.value.trim());
         break;
       default:
         break;
@@ -21,25 +21,39 @@ export const ContactsForm = ({ onAddContact }) => {
   const onBtnSubmit = event => {
     event.preventDefault();
 
-    if (name === '' || number === '') {
+    if (name === '' || phone === '') {
       alert('Enter your data');
       return;
     }
 
-    const newContact = { id: nanoid(), name, number };
+    const newContact = { id: nanoid(), name, phone };
     onAddContact(newContact);
 
-    setNumber('');
+    setPhone('');
     setName('');
   };
 
   return (
-    <form onSubmit={onBtnSubmit} className='form'>
-      <label className='label-name'>Name</label>
-      <input type="text" name="name" value={name} onChange={onInputChange}  className='input-name'/>
-      <label className='label-number'>Number</label>
-      <input type="tel" name="number" value={number} onChange={onInputChange} className='input-number'/>
-      <button className='btnAddContact' type="submit">Add Contact</button>
+    <form onSubmit={onBtnSubmit} className="form">
+      <label className="label-name">Name</label>
+      <input
+        type="text"
+        name="name"
+        value={name}
+        onChange={onInputChange}
+        className="input-name"
+      />
+      <label className="label-number">Number</label>
+      <input
+        type="tel"
+        name="phone"
+        value={phone}
+        onChange={onInputChange}
+        className="input-number"
+      />
+      <button className="btnAddContact" type="submit">
+        Add Contact
+      </button>
     </form>
   );
 };
