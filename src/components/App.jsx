@@ -9,16 +9,16 @@ import {
   deleteContactThunk,
   selectContacts,
   selectFilter,
-  selectIsLoading,
-  selectError,
+  // selectIsLoading,
+  // selectError,
 } from 'redux/phoneBookReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const App = () => {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  // const isLoading = useSelector(selectIsLoading);
+  // const error = useSelector(selectError);
 
   const dispatch = useDispatch();
 
